@@ -27,4 +27,8 @@ class Photo < ApplicationRecord
   has_many :comments # inverse of belongs_to :photo
 
   has_many :fans, through: :likes
+
+  validates :caption, presence: true
+  validates :likes_count , presence: true
+  validates :comments_count , presence: true
 end
