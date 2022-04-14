@@ -5,7 +5,8 @@ class CreatePhotos < ActiveRecord::Migration[6.1]
       t.integer :comments_count
       t.integer :likes_count
       t.text :caption
-      t.belongs_to :user, null: false, foreign_key: { to_table: :users }, index: true
+      # t.belongs_to :owner, null: false, foreign_key: true
+      t.belongs_to :owner, null: false, foreign_key: { to_table: :users }
 
       t.timestamps
     end
