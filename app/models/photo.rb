@@ -24,12 +24,12 @@ class Photo < ApplicationRecord
   belongs_to :owner, class_name: "User", counter_cache: true
 
   has_many :likes # inverse of belongs_to :photo
-  has_many :comments, foreign_key: :photo_id # inverse of belongs_to :photo
+  has_many :comments # inverse of belongs_to :photo
 
 
   has_many :fans, through: :likes
 
   validates :caption, presence: true
-  validates :likes_count , presence: true
-  validates :comments_count , presence: true
+  validates :image, presence: true
+
 end
