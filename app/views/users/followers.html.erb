@@ -1,0 +1,9 @@
+<div class = "container">
+  <%= render "shared/photos_tab"%>
+</div>
+
+<div class="list-group">
+  <%@user.followers.each do |follower|%>
+  <%=link_to follower.username, user_path(follower.username), class:"list-group-item list-group-item-action" %>
+ <%end%>
+</div>

@@ -1,0 +1,9 @@
+<div class = "container">
+  <%= render "shared/photos_tab", user: current_user.username%>
+</div>
+
+<div class="list-group">
+  <%@user.leaders.each do |leader|%>
+  <%=link_to leader.username, user_path(leader.username), class:"list-group-item list-group-item-action" %>
+ <%end%>
+</div>
