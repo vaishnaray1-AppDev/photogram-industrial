@@ -9,10 +9,14 @@ task sample_data: :environment do
     Photo.delete_all
     User.delete_all
 
-    usernames = Array.new{ Faker::Name.first_name}
+    
+    
+    usernames = []
+    rand(15).times do
+        usernames.append(Faker::Name.first_name.downcase)
+    end
+    
 
-    usernames << "alice"
-    usernames << "bob"
 
     usernames.each do |username|
     
@@ -30,19 +34,23 @@ task sample_data: :environment do
 
     users.each do |first_user|
       users.each do |second_user|
-        if rand < 0.75
-          first_user.sent_follow_requests.create(
-            recipient: second_user,
-            status: FollowRequest.statuses.keys.sample
-          ) 
-        end 
+            if first_user.username != second_user.username
+              if rand < 0.75 
+                first_user.sent_follow_requests.create(
+                  recipient: second_user,
+                  status: FollowRequest.statuses.keys.sample
+                ) 
+              else
+                second_user.sent_follow_requests.create(
+                  recipient: first_user,
+                  status: FollowRequest.statuses.keys.sample
+                ) 
+              end 
 
-        if rand < 0.75
-          second_user.sent_follow_requests.create(
-            recipient: first_user,
-            status: FollowRequest.statuses.keys.sample
-          ) 
-        end 
+              
+
+      
+            end
       end
 
     end 
@@ -50,7 +58,7 @@ task sample_data: :environment do
     users.each do |user|
       rand(15).times do
         photo = user.own_photos.create(
-                                      caption: "Hi", image: "https://www.some.url/ofimage.jpg"
+                                      caption: Faker::Quote.jack_handey, image: Faker::Avatar.image
                                       )
                               
         user.followers.each do |follower|
@@ -60,7 +68,7 @@ task sample_data: :environment do
           
           if rand <0.25
             photo.comments.create(
-              body: "this is a comment",
+              body: Faker::Quote.jack_handey,
               author: follower
             )
           end
@@ -74,6 +82,7 @@ task sample_data: :environment do
   
 
   
+  p usernames
   p "#{User.count} users have been created."
   p "#{FollowRequest.count} follow requests have been created."
   p "#{Photo.count} photos have been created."
