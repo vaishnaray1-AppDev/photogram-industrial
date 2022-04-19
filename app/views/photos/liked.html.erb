@@ -1,0 +1,13 @@
+<div class = "container">
+  <%= render "shared/photos_tab", user: current_user.username%>
+</div>
+
+
+
+<% current_user.liked_photos.each do |photo|%>
+ 
+  <%=render "photos/photo", photo: photo%>
+
+
+  
+<%end%>
